@@ -14,11 +14,14 @@ builder.Services.AddSwaggerGen();
 // Configuration FirestoreDb
 Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", @"livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json");
 
+//DI
+
+//Firebase database
 var projectId = builder.Configuration["firebaseProjectId"];
 var firestoreDb = FirestoreDb.Create(projectId);
 builder.Services.AddSingleton(firestoreDb);
 
-//Repo
+//Repositories
 builder.Services.AddScoped<IAlbumRepository, FirestoreAlbumRepository>();
 
 var app = builder.Build();
