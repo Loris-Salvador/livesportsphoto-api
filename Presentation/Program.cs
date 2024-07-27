@@ -1,7 +1,5 @@
-using Application;
 using Application.Repositories;
 using Google.Cloud.Firestore;
-using Google.Cloud.Firestore.V1;
 using Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);

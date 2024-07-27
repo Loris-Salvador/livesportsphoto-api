@@ -1,7 +1,5 @@
-﻿using Application;
-using Application.Repositories;
+﻿using Application.Repositories;
 using Domain.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Models;
 
