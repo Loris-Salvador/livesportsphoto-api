@@ -1,6 +1,6 @@
 ﻿namespace Presentation.Models;
 
-public class AlbumViewModel
+public class AlbumBindingModel
 {
     public required string Name { get; set; }
 

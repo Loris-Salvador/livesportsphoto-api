@@ -17,17 +17,17 @@ namespace Presentation.Controllers
         private IAlbumRepository AlbumRepository { get; }
 
         [HttpPost]
-        public async Task<ActionResult<Album>> AddAlbumAsync([FromBody] AlbumViewModel albumViewModel)
+        public async Task<ActionResult<Album>> AddAlbumAsync([FromBody] AlbumBindingModel albumBindingModel)
         {
             var album = new Album
             {
-                Name = albumViewModel.Name,
-                Link = albumViewModel.Link
+                Name = albumBindingModel.Name,
+                Link = albumBindingModel.Link
             };
 
-            await AlbumRepository.AddAlbumAsync(album);
+            var result = await AlbumRepository.AddAlbumAsync(album);
 
-            return Ok(album);
+            return Ok(result);
         }
     }
 }

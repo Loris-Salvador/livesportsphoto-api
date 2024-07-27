@@ -17,7 +17,7 @@ public class FirestoreAlbumRepository : IAlbumRepository
 
     private FirestoreDb FirestoreDb { get; }
 
-    public async Task AddAlbumAsync(Album album)
+    public async Task<Album> AddAlbumAsync(Album album)
     {
         var collection = FirestoreDb.Collection(CollectionName);
         var albumDocument = new AlbumDocument
@@ -26,6 +26,18 @@ public class FirestoreAlbumRepository : IAlbumRepository
             Link = album.Link
         };
 
-        await collection.AddAsync(albumDocument);
+        var documentRef = await collection.AddAsync(albumDocument);
+
+        var snapshot = await documentRef.GetSnapshotAsync();
+
+        var document =  snapshot.ConvertTo<AlbumDocument>();
+
+        return new Album
+        {
+            Id = document.Id,
+            Name = document.Name,
+            Link = document.Link
+        };
+
     }
 }
