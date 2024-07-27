@@ -4,5 +4,5 @@ namespace Application.Repositories;
 
 public interface IAlbumRepository
 {
-    Task<Album> AddAlbumAsync(Album album);
+    Task<Album> AddAlbumAsync(Album album, CancellationToken cancellationToken = default);
 }

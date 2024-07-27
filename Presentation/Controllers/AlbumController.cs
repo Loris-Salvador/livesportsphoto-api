@@ -17,7 +17,7 @@ namespace Presentation.Controllers
         private IAlbumRepository AlbumRepository { get; }
 
         [HttpPost]
-        public async Task<ActionResult<Album>> AddAlbumAsync([FromBody] AlbumBindingModel albumBindingModel)
+        public async Task<ActionResult<Album>> AddAlbumAsync([FromBody] AlbumBindingModel albumBindingModel, CancellationToken cancellation = default)
         {
             var album = new Album
             {
@@ -25,7 +25,7 @@ namespace Presentation.Controllers
                 Link = albumBindingModel.Link
             };
 
-            var result = await AlbumRepository.AddAlbumAsync(album);
+            var result = await AlbumRepository.AddAlbumAsync(album, cancellation);
 
             return Ok(result);
         }

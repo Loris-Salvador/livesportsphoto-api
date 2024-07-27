@@ -17,7 +17,7 @@ public class FirestoreAlbumRepository : IAlbumRepository
 
     private FirestoreDb FirestoreDb { get; }
 
-    public async Task<Album> AddAlbumAsync(Album album)
+    public async Task<Album> AddAlbumAsync(Album album, CancellationToken cancellationToken)
     {
         var collection = FirestoreDb.Collection(CollectionName);
         var albumDocument = new AlbumDocument
@@ -26,9 +26,9 @@ public class FirestoreAlbumRepository : IAlbumRepository
             Link = album.Link
         };
 
-        var documentRef = await collection.AddAsync(albumDocument);
+        var documentRef = await collection.AddAsync(albumDocument, cancellationToken);
 
-        var snapshot = await documentRef.GetSnapshotAsync();
+        var snapshot = await documentRef.GetSnapshotAsync(cancellationToken);
 
         var document =  snapshot.ConvertTo<AlbumDocument>();
 
