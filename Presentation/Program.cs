@@ -1,5 +1,7 @@
 using Application.Repositories;
+using Google.Api;
 using Google.Cloud.Firestore;
+using Infrastructure.Profiles;
 using Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,12 @@ builder.Services.AddSingleton(firestoreDb);
 
 //Repositories
 builder.Services.AddScoped<IAlbumRepository, FirestoreAlbumRepository>();
+builder.Services.AddScoped<ISectionRepository, FireStoreSectionRepository>();
+
+
+//AutoMapper
+builder.Services.AddAutoMapper(typeof(SectionProfile));
+
 
 var app = builder.Build();
 
