@@ -10,7 +10,4 @@ public class SectionDocument
 
     [FirestoreProperty]
     public required string Name { get; set; }
-
-    [FirestoreProperty]
-    public List<AlbumDocument> Albums { get; set; } = [];
 }

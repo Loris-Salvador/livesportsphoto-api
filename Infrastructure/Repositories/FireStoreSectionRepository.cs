@@ -32,8 +32,54 @@ public class FireStoreSectionRepository : ISectionRepository
 
         var snapshot = await documentRef.GetSnapshotAsync(cancellationToken);
 
-        var document =  snapshot.ConvertTo<SectionDocument>();
+        return Mapper.Map<Section>(snapshot.ConvertTo<SectionDocument>());
+    }
 
-        return Mapper.Map<Section>(document);
+    public async Task<Album> AddAlbumAsync(string sectionId, Album album, CancellationToken cancellationToken)
+    {
+
+        var albums = FirestoreDb.Collection(CollectionName).Document(sectionId).Collection("Albums");
+
+        var albumDocument = new AlbumDocument
+        {
+            Name = album.Name,
+            Link = album.Link
+        };
+
+        var documentRef =  await albums.AddAsync(albumDocument, cancellationToken);
+
+        var snapshot = await documentRef.GetSnapshotAsync(cancellationToken);
+
+        return Mapper.Map<Album>(snapshot.ConvertTo<AlbumDocument>());
+    }
+
+    public async Task<List<Section>> ToList(CancellationToken cancellationToken)
+    {
+        var sectionCollection = FirestoreDb.Collection(CollectionName);
+
+        var snapshot = await sectionCollection.GetSnapshotAsync(cancellationToken);
+
+        var sections = new List<Section>();
+
+        foreach (var sectionRef in snapshot.Documents)
+        {
+            var sectionDocument = sectionRef.ConvertTo<SectionDocument>();
+
+            var sectionModel = Mapper.Map<Section>(sectionDocument);
+
+            var albumsCollection =  sectionCollection.Document(sectionDocument.Id).Collection("Albums");
+            var albumsSnapshot = await albumsCollection.GetSnapshotAsync(cancellationToken);
+
+            foreach (var album in albumsSnapshot.Documents)
+            {
+                var albumDocument = album.ConvertTo<AlbumDocument>();
+
+                sectionModel.Albums.Add(Mapper.Map<Album>(albumDocument));
+            }
+
+            sections.Add(sectionModel);
+        }
+
+        return sections;
     }
 }
