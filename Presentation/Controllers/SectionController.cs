@@ -16,8 +16,16 @@ namespace Presentation.Controllers
 
         private ISectionRepository SectionRepository { get; }
 
+        [HttpGet]
+        public async Task<ActionResult<List<Section>>> ToList(CancellationToken cancellation)
+        {
+            var sections = await SectionRepository.ToListAsync(cancellation);
+
+            return Ok(sections);
+        }
+
         [HttpPost]
-        public async Task<ActionResult<Section>> AddAsync(string name, CancellationToken cancellation = default)
+        public async Task<ActionResult<Section>> AddAsync(string name, CancellationToken cancellation)
         {
             var section = new Section()
             {
@@ -30,7 +38,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("album")]
-        public async Task<ActionResult<Album>> AddAlbumAsync(string sectionId, [FromBody] AlbumBindingModel albumBindingModel, CancellationToken cancellation = default)
+        public async Task<ActionResult<Album>> AddAlbumAsync(string sectionId, [FromBody] AlbumBindingModel albumBindingModel, CancellationToken cancellation)
         {
             var album = new Album
             {
@@ -43,12 +51,12 @@ namespace Presentation.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Section>>> ToList(CancellationToken cancellation = default)
+        [HttpDelete("album")]
+        public async Task<ActionResult<Album>> DeleteAlbumAsync(string sectionId, string albumId, CancellationToken cancellation)
         {
-            var sections = await SectionRepository.ToList(cancellation);
+            var albumDeleted = await SectionRepository.DeleteAlbumAsync(sectionId, albumId, cancellation);
 
-            return Ok(sections);
+            return Ok(albumDeleted);
         }
     }
 }

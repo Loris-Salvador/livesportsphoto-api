@@ -8,5 +8,7 @@ public interface ISectionRepository
 
     Task<Album> AddAlbumAsync(string sectionId, Album album, CancellationToken cancellationToken = default);
 
-    Task<List<Section>> ToList(CancellationToken cancellationToken = default);
+    Task<List<Section>> ToListAsync(CancellationToken cancellationToken = default);
+
+    Task<Album> DeleteAlbumAsync(string sectionId, string albumId, CancellationToken cancellationToken = default);
 }

@@ -1,11 +1,10 @@
+#Config Firebase
 **/livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json
 
 # Ignore all folders :
 bin/
 obj/
 .vs/
-
-
 
 # Ignore all extensions : 
 *.user

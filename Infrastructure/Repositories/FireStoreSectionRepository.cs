@@ -8,7 +8,10 @@ namespace Infrastructure.Repositories;
 
 public class FireStoreSectionRepository : ISectionRepository
 {
-    private const string CollectionName = "Sections";
+    private const string SectionCollectionName = "Sections";
+
+    private const string AlbumsCollectionName = "Albums";
+
 
     public FireStoreSectionRepository(FirestoreDb firestoreDb, IMapper mapper)
     {
@@ -22,7 +25,7 @@ public class FireStoreSectionRepository : ISectionRepository
 
     public async Task<Section> AddAsync(Section section, CancellationToken cancellationToken)
     {
-        var collection = FirestoreDb.Collection(CollectionName);
+        var collection = FirestoreDb.Collection(SectionCollectionName);
         var sectionDocument = new SectionDocument()
         {
             Name = section.Name,
@@ -38,7 +41,7 @@ public class FireStoreSectionRepository : ISectionRepository
     public async Task<Album> AddAlbumAsync(string sectionId, Album album, CancellationToken cancellationToken)
     {
 
-        var albums = FirestoreDb.Collection(CollectionName).Document(sectionId).Collection("Albums");
+        var albums = FirestoreDb.Collection(SectionCollectionName).Document(sectionId).Collection(AlbumsCollectionName);
 
         var albumDocument = new AlbumDocument
         {
@@ -53,9 +56,9 @@ public class FireStoreSectionRepository : ISectionRepository
         return Mapper.Map<Album>(snapshot.ConvertTo<AlbumDocument>());
     }
 
-    public async Task<List<Section>> ToList(CancellationToken cancellationToken)
+    public async Task<List<Section>> ToListAsync(CancellationToken cancellationToken)
     {
-        var sectionCollection = FirestoreDb.Collection(CollectionName);
+        var sectionCollection = FirestoreDb.Collection(SectionCollectionName);
 
         var snapshot = await sectionCollection.GetSnapshotAsync(cancellationToken);
 
@@ -67,7 +70,7 @@ public class FireStoreSectionRepository : ISectionRepository
 
             var sectionModel = Mapper.Map<Section>(sectionDocument);
 
-            var albumsCollection =  sectionCollection.Document(sectionDocument.Id).Collection("Albums");
+            var albumsCollection =  sectionCollection.Document(sectionDocument.Id).Collection(AlbumsCollectionName);
             var albumsSnapshot = await albumsCollection.GetSnapshotAsync(cancellationToken);
 
             foreach (var album in albumsSnapshot.Documents)
@@ -81,5 +84,19 @@ public class FireStoreSectionRepository : ISectionRepository
         }
 
         return sections;
+    }
+
+    public async Task<Album> DeleteAlbumAsync(string sectionId, string albumId, CancellationToken cancellationToken = default)
+    {
+        var albumReference = FirestoreDb.Collection(SectionCollectionName)
+            .Document(sectionId)
+            .Collection(AlbumsCollectionName)
+            .Document(albumId);
+
+        var albumDocument = await albumReference.GetSnapshotAsync(cancellationToken);
+
+        await albumReference.DeleteAsync(cancellationToken: cancellationToken);
+
+        return Mapper.Map<Album>(albumDocument.ConvertTo<AlbumDocument>());
     }
 }
