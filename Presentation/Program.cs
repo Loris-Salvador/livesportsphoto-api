@@ -1,5 +1,4 @@
 using Application.Repositories;
-using Google.Api;
 using Google.Cloud.Firestore;
 using Infrastructure.Profiles;
 using Infrastructure.Repositories;
@@ -14,23 +13,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configuration FirestoreDb
-//LOCAL
-//var filepath = "./livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json";
-
-//RENDER
-var filepath = "/etc/secrets/livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json";
+var filepath = "./livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json";
 Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
 
 
 //Dependency injection 
 
 //Firebase database
-//LOCAL
-//var projectId = builder.Configuration["firebaseProjectId"];
-
-//RENDER
-var projectId = Environment.GetEnvironmentVariable("FIREBASE_PROJECT_ID"); //space???
-
+var projectId = builder.Configuration["firebaseProjectId"]; //user secrets
 
 var firestoreDb = FirestoreDb.Create(projectId);
 builder.Services.AddSingleton(firestoreDb);
@@ -58,7 +48,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.Urls.Add("http://*:80");
 
 app.Run();
