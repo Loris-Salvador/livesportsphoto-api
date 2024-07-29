@@ -14,13 +14,25 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configuration FirestoreDb
-Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", @"livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json");
+//LOCAL
+var filepath = "./livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json";
 
-//DI
+//RENDER
+//var filepath = "/etc/secrets/livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json";
+Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
+
+
+//Dependency injection 
 
 //Firebase database
-var projectId = builder.Configuration["firebaseProjectId"];
-var firestoreDb = FirestoreDb.Create(projectId);
+//LOCAL
+//var projectId = builder.Configuration["firebaseProjectId"];
+
+//RENDER
+//var projectId = Environment.GetEnvironmentVariable("FIREBASE_PROJECT_ID"); //space???
+
+
+var firestoreDb = FirestoreDb.Create("livesportsphoto-1bd95");
 builder.Services.AddSingleton(firestoreDb);
 
 //Repositories
@@ -46,5 +58,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.Urls.Add("http://*:80");
 
 app.Run();
