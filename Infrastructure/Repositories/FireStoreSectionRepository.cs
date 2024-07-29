@@ -99,4 +99,20 @@ public class FireStoreSectionRepository : ISectionRepository
 
         return Mapper.Map<Album>(albumDocument.ConvertTo<AlbumDocument>());
     }
+
+    public async Task<List<Album>> GetAlbumAsync(string sectionId, CancellationToken cancellationToken = default)
+    {
+        var albumCollection = FirestoreDb.Collection(SectionCollectionName).Document(sectionId).Collection(AlbumsCollectionName);
+
+        var snapshot = await albumCollection.GetSnapshotAsync(cancellationToken);
+
+        var albums = new List<Album>();
+
+        foreach (var album in snapshot.Documents)
+        {
+            albums.Add(Mapper.Map<Album>(album.ConvertTo<AlbumDocument>()));
+        }
+
+        return albums;
+    }
 }

@@ -17,11 +17,19 @@ namespace Presentation.Controllers
         private ISectionRepository SectionRepository { get; }
 
         [HttpGet]
-        public async Task<ActionResult<List<Section>>> ToList(CancellationToken cancellation)
+        public async Task<ActionResult<List<Section>>> ToListAsync(CancellationToken cancellation)
         {
             var sections = await SectionRepository.ToListAsync(cancellation);
 
             return Ok(sections);
+        }
+
+        [HttpGet("album/{sectionId}")]
+        public async Task<ActionResult<List<Album>>> GetAlbum(string sectionId, CancellationToken cancellation)
+        {
+            var albums = await SectionRepository.GetAlbumAsync(sectionId, cancellation);
+
+            return Ok(albums);
         }
 
         [HttpPost]
