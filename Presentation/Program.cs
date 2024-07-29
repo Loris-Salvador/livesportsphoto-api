@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configuration FirestoreDb
-var filepath = "./livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json";
+const string filepath = "./livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json";
 Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
 
 
