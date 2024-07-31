@@ -26,7 +26,7 @@ var firestoreDb = FirestoreDb.Create(projectId);
 builder.Services.AddSingleton(firestoreDb);
 
 //Repositories
-builder.Services.AddScoped<IAlbumRepository, FirestoreAlbumRepository>();
+builder.Services.AddScoped<IUserRepository, FireStoreUserRepository>();
 builder.Services.AddScoped<ISectionRepository, FireStoreSectionRepository>();
 
 
@@ -44,7 +44,7 @@ builder.Services.AddCors(options =>
         });
 });
 
-
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -58,6 +58,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.UseCors("AllowAllOrigins");
 

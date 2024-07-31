@@ -115,4 +115,16 @@ public class FireStoreSectionRepository : ISectionRepository
 
         return albums;
     }
+
+    public async Task<Section> DeleteAsync(string sectionId, CancellationToken cancellationToken = default)
+    {
+        var sectionReference = FirestoreDb.Collection(SectionCollectionName)
+            .Document(sectionId);
+
+        var sectionDocument = await sectionReference.GetSnapshotAsync(cancellationToken);
+
+        await sectionReference.DeleteAsync(cancellationToken: cancellationToken);
+
+        return Mapper.Map<Section>(sectionDocument.ConvertTo<SectionDocument>());
+    }
 }

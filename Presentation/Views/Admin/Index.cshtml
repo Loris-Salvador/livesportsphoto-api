@@ -1,0 +1,430 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin LiveSportsPhoto</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .bottom-container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            height: 100%; /* Hauteur fixe pour la section contenant les colonnes */
+        }
+
+        .bottom-div {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Masque le débordement des colonnes */
+        }
+
+        .left-div {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .right-div {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #sections-column {
+            flex: 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 5px;
+            overflow-y: auto; /* Ajoute une barre de défilement verticale si nécessaire */
+        }
+
+        #sections-column div {
+            border: 2px solid white;
+            border-radius: 15px;
+            padding: 10px;
+            background-color: #adadad;
+            margin-bottom: 30px;
+            cursor: pointer;
+            width: 200px;
+            box-sizing: border-box;
+        }
+
+        #sections-column div:hover {
+            background-color: rgb(80, 80, 80);
+        }
+
+        #albums-column {
+            flex: 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto; /* Ajoute une barre de défilement verticale si nécessaire */
+        }
+
+        #albums-column div {
+            border: 2px solid white;
+            border-radius: 15px;
+            background-color: #adadad;
+            margin-bottom: 30px;
+            cursor: pointer;
+            width: 200px;
+            box-sizing: border-box;
+        }
+
+        #albums-column div:hover {
+            background-color: rgb(80, 80, 80);
+        }
+
+        #albums-column div p,
+        #sections-column div {
+            text-align: center;
+            font-size: 22px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .highlighted {
+            background-color: rgb(80, 80, 80);
+        }
+
+        .section-add {
+            flex: 1;
+            display: flex;
+            flex-direction: column; /* Correction de la propriété `flex` */
+        }
+
+        .text-div {
+            flex: 1;
+        }
+
+        .text-div p {
+            text-align: center;
+            margin: 0;
+            margin-top: 20px;
+            font-size: 22px;
+        }
+
+        .form {
+            flex: 2;
+            margin-top: 30px;
+            width: 100%;
+            align-items: center;
+            text-align: center;
+        }
+
+        .form input {
+            height: 30px;
+        }
+
+        .form button {
+            height: 35px;
+            background-color: #9ed3ff;
+            border-color: transparent;
+        }
+
+        .form button:hover {
+            background-color: #383bff;
+        }
+
+        /* album */
+
+        .album-add {
+            flex: 1;
+            display: flex;
+            flex-direction: column; /* Correction de la propriété `flex` */
+        }
+
+        .text-div-album {
+            flex: 1;
+        }
+
+        .text-div-album p {
+            text-align: center;
+            margin: 0;
+            margin-top: 20px;
+            font-size: 22px;
+        }
+
+        .form-album {
+            flex: 2;
+            margin-top: 30px;
+            width: 100%;
+            align-items: center;
+            text-align: center;
+        }
+
+        .form-album input {
+            height: 30px;
+        }
+
+        .form-album button {
+            height: 35px;
+            background-color: #9ed3ff;
+            border-color: transparent;
+        }
+
+        .form-album button:hover {
+            background-color: #383bff;
+        }
+
+        .album-delete button {
+            height: 35px;
+            background-color: #ff0000;
+            border-color: transparent;
+        }
+
+        .album-delete {
+            flex: 1;
+            margin-top: 30px;
+            width: 100%;
+            align-items: center;
+            text-align: center;
+        }
+
+        .album-delete button:hover {
+            background-color: #ff7373;
+        }
+
+        .section-delete button {
+            height: 35px;
+            background-color: #ff0000;
+            border-color: transparent;
+        }
+
+        .section-delete {
+            flex: 1;
+            margin-top: 30px;
+            width: 100%;
+            align-items: center;
+            text-align: center;
+        }
+
+        .section-delete button:hover {
+            background-color: #ff7373;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="bottom-container">
+        <div class="bottom-div left-div">
+            <div id="sections-column">
+                <!-- Les sections seront ajoutées ici dynamiquement -->
+            </div>
+            <div class="section-add">
+                <div class="text-div">
+                    <p>Ajouter une section</p>
+                </div>
+                <div class="form">
+                    <input type="text" id="textInput" placeholder="nom section" />
+                    <button id="valider-button">Valider</button>
+                </div>
+            </div>
+            <div class="section-delete">
+                <button id="section-button-section">Delete</button>
+            </div>
+        </div>
+        <div class="bottom-div right-div">
+            <div id="albums-column">
+                <!-- Les albums seront affichés ici -->
+            </div>
+            <div class="album-add">
+                <div class="text-div-album">
+                    <p>Ajouter/Supprimer un album</p>
+                </div>
+                <div class="form-album">
+                    <input type="text" id="textInputAlbum" placeholder="nom album" />
+                    <input
+                        type="text"
+                        id="textInputAlbumLink"
+                        placeholder="lien album"
+                    />
+                    <button id="valider-button-album">Valider</button>
+                </div>
+            </div>
+            <div class="album-delete">
+                <button id="delete-button-album">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const sectionsColumn = document.getElementById("sections-column");
+        const albumsColumn = document.getElementById("albums-column");
+        let selectedDiv;
+        let selectedAlbum;
+
+        let button = document.getElementById("valider-button");
+        let input = document.getElementById("textInput");
+
+        let buttonAlbum = document.getElementById("valider-button-album");
+        let inputAlbum = document.getElementById("textInputAlbum");
+        let inputAlbumLink = document.getElementById("textInputAlbumLink");
+        let deleteAlbumButton = document.getElementById("delete-button-album");
+
+        let deleteSectionButton = document.getElementById("section-button-section");
+
+        let albumId;
+
+        // Fonction pour charger les sections depuis l'API
+        async function loadSections() {
+            try {
+                const response = await fetch("https://localhost:7077/api/Section"); // Remplacez par l'URL de votre API
+                const sections = await response.json();
+
+                // Vider le conteneur avant d'ajouter les nouvelles sections
+                sectionsColumn.innerHTML = "";
+
+                sections.forEach((section) => {
+                    const sectionDiv = document.createElement("div");
+                    sectionDiv.className = "section";
+                    sectionDiv.textContent = section.name;
+                    sectionDiv.dataset.id = section.id;
+
+                    sectionDiv.addEventListener("mouseover", () => {
+                        loadAlbums(section.id);
+
+                        if (selectedDiv && selectedDiv !== sectionDiv) {
+                            selectedDiv.style.backgroundColor = ""; // Réinitialiser la couleur de fond
+                        }
+
+                        // Appliquer la nouvelle couleur de fond
+                        sectionDiv.style.backgroundColor = "rgb(80, 80, 80)"; // Remplacez par la couleur souhaitée
+                        selectedDiv = sectionDiv;
+                    });
+
+                    sectionsColumn.appendChild(sectionDiv);
+                });
+            } catch (error) {
+                console.error("Erreur lors du chargement des sections:", error);
+            }
+        }
+
+        async function loadAlbums(sectionId) {
+            try {
+                const response = await fetch(
+                    `https://localhost:7077/api/section/album/${sectionId}`
+                );
+                const albums = await response.json();
+
+                // Nettoyer la colonne des albums avant d'ajouter les nouveaux albums
+                albumsColumn.innerHTML = "";
+
+                albums.forEach((album) => {
+                    const albumDiv = document.createElement("div");
+                    albumDiv.className = "album";
+
+                    // Créer un élément <a> avec l'URL du lien
+                    const albumLink = document.createElement("p");
+                    albumLink.textContent = album.name;
+                    albumId = album.id;
+
+                    // Ajouter l'élément <a> au <div>
+                    albumDiv.appendChild(albumLink);
+
+                    // Ajouter un gestionnaire d'événements pour rediriger vers le lien lors du clic sur le <div>
+                    albumDiv.addEventListener("click", () => {
+                        if (selectedAlbum && selectedAlbum !== albumDiv) {
+                            selectedAlbum.style.backgroundColor = ""; // Réinitialiser la couleur de fond
+                        }
+
+                        // Appliquer la nouvelle couleur de fond
+                        albumDiv.style.backgroundColor = "rgb(80, 80, 80)"; // Remplacez par la couleur souhaitée
+                        selectedAlbum = albumDiv;
+                    });
+
+                    // Ajouter le <div> à la colonne des albums
+                    albumsColumn.appendChild(albumDiv);
+                });
+            } catch (error) {
+                console.error("Erreur lors du chargement des albums:", error);
+            }
+        }
+
+        // Charger les sections lors du chargement de la page
+        loadSections();
+
+        //input
+        button.addEventListener("click", async () => {
+            console.log("click");
+            const name = input.value;
+            console.log(name);
+            const url = `https://localhost:7077/api/section?name=${name}`;
+
+            await fetch(url, {
+                method: "POST", // Méthode HTTP
+                headers: {
+                    "Content-Type": "text/plain", // Spécifier le type de contenu
+                },
+            });
+            console.log("load sections");
+            await loadSections();
+        });
+
+        buttonAlbum.addEventListener("click", async () => {
+            console.log("click");
+            const name = inputAlbum.value;
+            console.log(selectedDiv.dataset.id);
+            const url = `https://localhost:7077/api/section/album?sectionId=${selectedDiv.dataset.id}`;
+
+            const data = {
+                name: name,
+                link: inputAlbumLink.value,
+            };
+
+            await fetch(url, {
+                method: "POST", // Méthode HTTP
+                headers: {
+                    "Content-Type": "application/json", // Spécifier le type de contenu
+                },
+                body: JSON.stringify(data), // Convertir l'objet de données en chaîne JSON
+            });
+            await loadAlbums(selectedDiv.dataset.id);
+        });
+
+        deleteAlbumButton.addEventListener("click", async () => {
+            const url = `https://localhost:7077/api/section/album?sectionId=${selectedDiv.dataset.id}&albumId=${albumId}`;
+
+            await fetch(url, {
+                method: "DELETE", // Méthode HTTP
+                headers: {},
+            });
+            await loadAlbums(selectedDiv.dataset.id);
+        });
+
+        deleteSectionButton.addEventListener("click", async () => {
+            console.log("click");
+            const url = `https://localhost:7077/api/section?sectionId=${selectedDiv.dataset.id}`;
+
+            await fetch(url, {
+                method: "DELETE", // Méthode HTTP
+                headers: {},
+            });
+            await loadSections();
+        });
+    });
+</script>
+</body>
+</html>

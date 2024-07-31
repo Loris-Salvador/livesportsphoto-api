@@ -59,6 +59,14 @@ namespace Presentation.Controllers
             return Ok(result);
         }
 
+        [HttpDelete()]
+        public async Task<ActionResult<Section>> DeleteAsync(string sectionId, CancellationToken cancellation)
+        {
+            var sectionDelete = await SectionRepository.DeleteAsync(sectionId, cancellation);
+
+            return Ok(sectionDelete);
+        }
+
         [HttpDelete("album")]
         public async Task<ActionResult<Album>> DeleteAlbumAsync(string sectionId, string albumId, CancellationToken cancellation)
         {
