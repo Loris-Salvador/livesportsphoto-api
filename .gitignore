@@ -8,3 +8,7 @@ obj/
 
 # Ignore all extensions : 
 *.user
+
+#
+
+./Presentation/Properties/*
