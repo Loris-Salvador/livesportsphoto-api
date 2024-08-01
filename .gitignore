@@ -11,4 +11,4 @@ obj/
 
 #
 
-./Presentation/Properties/*
+./Presentation/Properties/launchSettings.json
