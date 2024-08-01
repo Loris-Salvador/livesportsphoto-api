@@ -10,3 +10,4 @@ obj/
 *.user
 
 Presentation/Properties/launchSettings.json
+.editorconfig
