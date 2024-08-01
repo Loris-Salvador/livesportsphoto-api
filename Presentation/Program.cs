@@ -12,15 +12,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configuration FirestoreDb
-const string filepath = "./livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json";
-Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+    const string filepath = "./livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json";
+    Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
+}
 
+builder.Configuration.AddEnvironmentVariables();
 
 //Dependency injection 
-
 //Firebase database
-var projectId = builder.Configuration["firebaseProjectId"]; //user secrets
+var projectId = builder.Configuration["FIREBASE_PROJECT_ID"]; //user secrets
 
 var firestoreDb = FirestoreDb.Create(projectId);
 builder.Services.AddSingleton(firestoreDb);
