@@ -9,5 +9,4 @@ obj/
 # Ignore all extensions : 
 *.user
 
-Presentation/Properties/launchSettings.json
 .editorconfig
