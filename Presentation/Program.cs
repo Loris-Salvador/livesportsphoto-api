@@ -52,7 +52,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "AllowOrigin",
         policy =>
         {
-            policy.WithOrigins("https://livesportsphoto.be")
+            policy.WithOrigins("https://www.livesportsphoto.be")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
