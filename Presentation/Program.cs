@@ -6,7 +6,6 @@ using Infrastructure.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -15,7 +14,8 @@ builder.Services.AddSwaggerGen();
 if (builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddUserSecrets<Program>();
-    const string filepath = "./livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json";
+
+    var filepath = builder.Configuration["FIREBASE_CREDENTIALS_FILE_PATH"];
     Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
 }
 
@@ -36,18 +36,27 @@ builder.Services.AddScoped<ISectionRepository, FireStoreSectionRepository>();
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(SectionProfile));
 
+
+builder.Services.AddControllersWithViews();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "AllowAllOrigins",
-        configurePolicy: policy =>
+        policy =>
         {
             policy.AllowAnyOrigin()
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
-});
 
-builder.Services.AddControllersWithViews();
+    options.AddPolicy(name: "AllowOrigin",
+        policy =>
+        {
+            policy.WithOrigins("https://livesportsphoto.be")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 var app = builder.Build();
 
@@ -56,6 +65,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("AllowAllOrigins");
+}
+else
+{
+    app.UseCors("AllowOrigin");
 }
 
 app.UseHttpsRedirection();
@@ -65,8 +79,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.UseCors("AllowAllOrigins");
 
 app.MapControllers();
 
