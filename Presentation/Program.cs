@@ -53,6 +53,19 @@ if (builder.Environment.IsProduction())
             });
     });
 }
+else if (builder.Environment.EnvironmentName == "Staging")
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(name: "AllowAllOrigin",
+            policy =>
+            {
+                policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+    });
+}
 
 var app = builder.Build();
 
@@ -65,6 +78,10 @@ if (app.Environment.IsDevelopment())
 else if (app.Environment.IsProduction())
 {
     app.UseCors("AllowOrigin");
+}
+else
+{
+    app.UseCors("AllowAllOrigin");
 }
 
 app.UseHttpsRedirection();
