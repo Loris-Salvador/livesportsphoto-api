@@ -39,16 +39,19 @@ builder.Services.AddAutoMapper(typeof(SectionProfile));
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddCors(options =>
+if (builder.Environment.IsProduction())
 {
-    options.AddPolicy(name: "AllowOrigin",
-        policy =>
-        {
-            policy.WithOrigins("https://www.livesportsphoto.be")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(name: "AllowOrigin",
+            policy =>
+            {
+                policy.WithOrigins("https://www.livesportsphoto.be")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+    });
+}
 
 var app = builder.Build();
 
