@@ -41,14 +41,6 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "AllowAllOrigins",
-        policy =>
-        {
-            policy.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-
     options.AddPolicy(name: "AllowOrigin",
         policy =>
         {
@@ -65,7 +57,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors("AllowAllOrigins");
 }
 else
 {
