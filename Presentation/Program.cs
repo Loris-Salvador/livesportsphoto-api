@@ -62,7 +62,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-else
+else if (app.Environment.IsProduction())
 {
     app.UseCors("AllowOrigin");
 }
