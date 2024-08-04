@@ -41,6 +41,7 @@ builder.Services.AddControllersWithViews();
 
 if (builder.Environment.IsProduction())
 {
+    Console.WriteLine("Prod");
     builder.Services.AddCors(options =>
     {
         options.AddPolicy(name: "AllowOrigin",
