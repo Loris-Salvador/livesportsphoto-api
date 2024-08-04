@@ -39,33 +39,25 @@ builder.Services.AddAutoMapper(typeof(SectionProfile));
 
 builder.Services.AddControllersWithViews();
 
-if (builder.Environment.IsProduction())
+
+builder.Services.AddCors(options =>
 {
-    Console.WriteLine("Prod");
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy(name: "AllowOrigin",
-            policy =>
-            {
-                policy.WithOrigins("https://www.livesportsphoto.be")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-            });
-    });
-}
-else if (builder.Environment.EnvironmentName == "Staging")
-{
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy(name: "AllowAllOrigin",
-            policy =>
-            {
-                policy.AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-            });
-    });
-}
+    options.AddPolicy(name: "AllowOrigin",
+        policy =>
+        {
+            policy.WithOrigins("https://www.livesportsphoto.be")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+    options.AddPolicy(name: "AllowAllOrigin",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 
 var app = builder.Build();
 
@@ -79,7 +71,7 @@ else if (app.Environment.IsProduction())
 {
     app.UseCors("AllowOrigin");
 }
-else
+else if(app.Environment.IsStaging())
 {
     app.UseCors("AllowAllOrigin");
 }
