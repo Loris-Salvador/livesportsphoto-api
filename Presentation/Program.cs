@@ -5,25 +5,26 @@ using Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 if (builder.Environment.IsDevelopment())
 {
+    //add secrets which are environment variable in prod/staging
     builder.Configuration.AddUserSecrets<Program>();
 
+    //need to set environment variable (how google firebase works)
     var filepath = builder.Configuration["FIREBASE_CREDENTIALS_FILE_PATH"];
     Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
 }
-
-builder.Configuration.AddEnvironmentVariables();
+else
+{
+    builder.Configuration.AddEnvironmentVariables();
+}
 
 //Dependency injection 
-//Firebase database
-var projectId = builder.Configuration["FIREBASE_PROJECT_ID"]; //user secrets
+var projectId = builder.Configuration["FIREBASE_PROJECT_ID"];
 
 var firestoreDb = FirestoreDb.Create(projectId);
 builder.Services.AddSingleton(firestoreDb);
@@ -38,7 +39,6 @@ builder.Services.AddAutoMapper(typeof(SectionProfile));
 
 
 builder.Services.AddControllersWithViews();
-
 
 builder.Services.AddCors(options =>
 {
@@ -77,12 +77,11 @@ else if(app.Environment.IsStaging())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}");
 
 app.MapControllers();
 
