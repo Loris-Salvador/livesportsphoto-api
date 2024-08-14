@@ -42,10 +42,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "AllowOrigin",
+    options.AddPolicy(name: "Localhost",
         policy =>
         {
-            policy.WithOrigins("https://www.livesportsphoto.be")
+            policy.WithOrigins("http://127.0.0.1:5500")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
@@ -66,6 +66,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("Localhost");
 }
 else if (app.Environment.IsProduction())
 {
@@ -73,7 +74,7 @@ else if (app.Environment.IsProduction())
 }
 else if(app.Environment.IsStaging())
 {
-    app.UseCors("AllowAllOrigin");
+    app.UseCors("Localhost");
 }
 
 app.UseHttpsRedirection();
