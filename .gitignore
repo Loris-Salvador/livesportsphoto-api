@@ -1,6 +1,5 @@
 #Config Firebase
-**/livesportsphoto-1bd95-firebase-adminsdk-cd6sc-f2dc58e360.json
-**/livesportsphoto-staging-firebase-adminsdk-bbjls-220e331109.json
+**/livesportsphoto-dev-firebase-adminsdk-p58rm-a4c3e63250.json
 
 # Ignore all folders :
 bin/

@@ -23,7 +23,7 @@ else
     builder.Configuration.AddEnvironmentVariables();
 }
 
-//Dependency injection 
+//Dependency injection
 var projectId = builder.Configuration["FIREBASE_PROJECT_ID"];
 
 var firestoreDb = FirestoreDb.Create(projectId);
