@@ -3,7 +3,7 @@ using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Models;
 
-namespace Presentation.Controllers
+namespace Presentation.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]

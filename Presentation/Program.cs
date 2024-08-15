@@ -85,6 +85,7 @@ else if(app.Environment.IsStaging())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseAuthorization();
 
 app.MapControllerRoute(

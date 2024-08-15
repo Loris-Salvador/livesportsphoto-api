@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="appsettings.Production.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\admin.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
@@ -17,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\css\admin.css" />
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
 </Project>

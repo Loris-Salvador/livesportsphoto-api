@@ -1,8 +1,7 @@
 ﻿using Application.Repositories;
-using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.Controllers.Web;
+namespace Presentation.Controllers;
 
 public class AdminController : Controller
 {
