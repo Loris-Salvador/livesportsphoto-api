@@ -23,4 +23,9 @@ public class AdminController : Controller
 
         return View();
     }
+
+    public async Task<IActionResult> Auth()
+    {
+        return View();
+    }
 }
