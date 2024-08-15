@@ -49,6 +49,13 @@ builder.Services.AddCors(options =>
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
+    options.AddPolicy(name: "AllowOrigin",
+        policy =>
+        {
+            policy.WithOrigins("https://www.livesportsphoto.be")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
     options.AddPolicy(name: "AllowAllOrigin",
         policy =>
         {
