@@ -74,7 +74,7 @@ else if (app.Environment.IsProduction())
 }
 else if(app.Environment.IsStaging())
 {
-    app.UseCors("Localhost");
+    app.UseCors("AllowAllOrigin");
 }
 
 app.UseHttpsRedirection();
