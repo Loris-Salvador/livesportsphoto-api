@@ -1,4 +1,5 @@
 ﻿using Application.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
@@ -12,20 +13,14 @@ public class AdminController : Controller
 
     private IUserRepository UserRepository { get; }
 
-    public async Task<IActionResult> Index(string name, string password, CancellationToken cancellation)
+    [Authorize]
+    public Task<IActionResult> Content()
     {
-        var user = await UserRepository.GetUser(name, cancellation);
-
-        if (user == null || user.Password != password)
-        {
-            return BadRequest();
-        }
-
-        return View();
+        return Task.FromResult<IActionResult>(View());
     }
 
-    public async Task<IActionResult> Auth()
+    public Task<IActionResult> Index()
     {
-        return View();
+        return Task.FromResult<IActionResult>(View());
     }
 }

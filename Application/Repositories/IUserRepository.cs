@@ -4,5 +4,5 @@ namespace Application.Repositories;
 
 public interface IUserRepository
 {
-    Task<User> GetUser(string name, CancellationToken cancellationToken = default);
+    Task<User?> GetUser(string name, CancellationToken cancellationToken = default);
 }

@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin LiveSportsPhoto</title>
+    <link href="~/css/admin.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="bottom-container">
+        <div class="bottom-div left-div">
+            <div id="sections-column">
+                <!-- Les sections seront ajoutées ici dynamiquement -->
+            </div>
+            <div class="section-add">
+                <div class="text-div">
+                    <p>Ajouter une section</p>
+                </div>
+                <div class="form">
+                    <input type="text" id="textInput" placeholder="nom section"/>
+                    <button id="valider-button">Valider</button>
+                </div>
+            </div>
+            <div class="section-delete">
+                <button id="section-button-section">Delete</button>
+            </div>
+        </div>
+        <div class="bottom-div right-div">
+            <div id="albums-column">
+                <!-- Les albums seront affichés ici -->
+            </div>
+            <div class="album-add">
+                <div class="text-div-album">
+                    <p>Ajouter/Supprimer un album</p>
+                </div>
+                <div class="form-album">
+                    <input type="text" id="textInputAlbum" placeholder="nom album"/>
+                    <input
+                        type="text"
+                        id="textInputAlbumLink"
+                        placeholder="lien album"/>
+                    <button id="valider-button-album">Valider</button>
+                </div>
+            </div>
+            <div class="album-delete">
+                <button id="delete-button-album">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/admin.js"></script>
+</body>
+</html>
