@@ -26,29 +26,6 @@ else
     builder.Configuration.AddEnvironmentVariables();
 }
 
-//JWT
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(options =>
-    {
-        var jwtSettings = builder.Configuration.GetSection("Jwt");
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = jwtSettings["Issuer"],
-            ValidAudience = jwtSettings["Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT_SECRET_KEY"]!))
-        };
-    });
-
-builder.Services.AddAuthorization();
-
 //Dependency injection
 var projectId = builder.Configuration["FIREBASE_PROJECT_ID"];
 
@@ -56,15 +33,13 @@ var firestoreDb = FirestoreDb.Create(projectId);
 builder.Services.AddSingleton(firestoreDb);
 
 //Repositories
-builder.Services.AddScoped<IUserRepository, FireStoreUserRepository>();
 builder.Services.AddScoped<ISectionRepository, FireStoreSectionRepository>();
 
 
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(SectionProfile));
+builder.Services.AddAutoMapper(typeof(AlbumProfile));
 
-
-builder.Services.AddControllersWithViews();
 
 builder.Services.AddCors(options =>
 {
@@ -109,15 +84,6 @@ else if(app.Environment.IsStaging())
 {
     app.UseCors("AllowAllOrigin");
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}");
 
 app.MapControllers();
 

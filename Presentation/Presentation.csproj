@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\css\admin.css" />
-  </ItemGroup>
-
 </Project>
