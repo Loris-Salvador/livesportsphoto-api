@@ -16,6 +16,7 @@ namespace Presentation.Controllers.Api
 
         private ISectionRepository SectionRepository { get; }
 
+
         [HttpGet]
         public async Task<ActionResult<List<Section>>> ToListAsync(CancellationToken cancellation)
         {
@@ -24,13 +25,15 @@ namespace Presentation.Controllers.Api
             return Ok(sections);
         }
 
-        [HttpGet("album/{sectionId}")]
-        public async Task<ActionResult<List<Album>>> GetAlbum(string sectionId, CancellationToken cancellation)
+
+        [HttpGet("albums/{sectionId}")]
+        public async Task<ActionResult<List<Album>>> GetAlbums(string sectionId, CancellationToken cancellation)
         {
-            var albums = await SectionRepository.GetAlbumAsync(sectionId, cancellation);
+            var albums = await SectionRepository.GetAlbumsAsync(sectionId, cancellation);
 
             return Ok(albums);
         }
+
 
         [HttpPost]
         public async Task<ActionResult<Section>> AddAsync(string name, CancellationToken cancellation)
@@ -44,6 +47,7 @@ namespace Presentation.Controllers.Api
 
             return Ok(result);
         }
+
 
         [HttpPost("album")]
         public async Task<ActionResult<Album>> AddAlbumAsync(string sectionId, [FromBody] AlbumBindingModel albumBindingModel, CancellationToken cancellation)
@@ -59,6 +63,7 @@ namespace Presentation.Controllers.Api
             return Ok(result);
         }
 
+
         [HttpDelete()]
         public async Task<ActionResult<Section>> DeleteAsync(string sectionId, CancellationToken cancellation)
         {
@@ -66,6 +71,7 @@ namespace Presentation.Controllers.Api
 
             return Ok(sectionDelete);
         }
+
 
         [HttpDelete("album")]
         public async Task<ActionResult<Album>> DeleteAlbumAsync(string sectionId, string albumId, CancellationToken cancellation)

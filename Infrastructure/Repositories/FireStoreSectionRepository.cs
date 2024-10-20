@@ -29,6 +29,7 @@ public class FireStoreSectionRepository : ISectionRepository
         var sectionDocument = new SectionDocument()
         {
             Name = section.Name,
+
         };
 
         var documentRef = await collection.AddAsync(sectionDocument, cancellationToken);
@@ -100,7 +101,7 @@ public class FireStoreSectionRepository : ISectionRepository
         return Mapper.Map<Album>(albumDocument.ConvertTo<AlbumDocument>());
     }
 
-    public async Task<List<Album>> GetAlbumAsync(string sectionId, CancellationToken cancellationToken = default)
+    public async Task<List<Album>> GetAlbumsAsync(string sectionId, CancellationToken cancellationToken = default)
     {
         var albumCollection = FirestoreDb.Collection(SectionCollectionName).Document(sectionId).Collection(AlbumsCollectionName);
 

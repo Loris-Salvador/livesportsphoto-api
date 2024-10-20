@@ -14,7 +14,7 @@ namespace Presentation.Controllers
 
         public async Task<IActionResult> Index(string id, CancellationToken cancellationToken)
         {
-            var albums = await SectionRepository.GetAlbumAsync(id, cancellationToken);
+            var albums = await SectionRepository.GetAlbumsAsync(id, cancellationToken);
 
             return View(albums);
         }

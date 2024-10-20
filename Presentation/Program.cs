@@ -86,6 +86,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//wwwroot (static files)
+app.UseStaticFiles();
+
 //MVC
 app.MapControllerRoute(
     name: "default",
