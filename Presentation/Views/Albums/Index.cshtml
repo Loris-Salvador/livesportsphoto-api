@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Domain.Models.Album>
+
+@{
+    ViewData["Title"] = "Albums";
+}
+
+<h1>Albums</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Link</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model != null && Model.Any())
+    {
+        foreach (var album in Model)
+        {
+            <tr>
+                <td>@album.Id</td>
+                <td>@album.Name</td>
+                <td><a href="@album.Link" target="_blank">View Album</a></td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="3">No albums found.</td>
+        </tr>
+    }
+    </tbody>
+</table>

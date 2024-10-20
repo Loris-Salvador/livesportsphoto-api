@@ -1,16 +1,18 @@
-using System.Text;
 using Application.Repositories;
 using Google.Cloud.Firestore;
 using Infrastructure.Profiles;
 using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//MVC
+builder.Services.AddControllersWithViews();
+
 
 if (builder.Environment.IsDevelopment())
 {
@@ -43,13 +45,6 @@ builder.Services.AddAutoMapper(typeof(AlbumProfile));
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "Localhost",
-        policy =>
-        {
-            policy.WithOrigins("http://127.0.0.1:5500")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
     options.AddPolicy(name: "AllowOrigin",
         policy =>
         {
@@ -74,7 +69,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors("Localhost");
 }
 else if (app.Environment.IsProduction())
 {
@@ -85,6 +79,17 @@ else if(app.Environment.IsStaging())
     app.UseCors("AllowAllOrigin");
 }
 
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
 app.MapControllers();
+
+//MVC
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();
