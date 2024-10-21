@@ -3,24 +3,6 @@
 <head>
     <title>@Model.Name</title>
     <link rel="stylesheet" href="~/albums/styles/style.css" />
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Sélectionner tous les éléments avec la classe 'album'
-            const albums = document.querySelectorAll('.album');
-
-            // Ajouter un événement de clic à chaque album
-            albums.forEach(album => {
-                album.addEventListener('click', function() {
-                    // Récupérer le lien à partir de l'attribut 'data-link'
-                    const link = album.getAttribute('data-link');
-                    if (link) {
-                        // Rediriger vers le lien
-                        window.location.href = link;
-                    }
-                });
-            });
-        });
-    </script>
 </head>
 
 <body>
@@ -38,4 +20,6 @@
         }
     </div>
 </div>
+
+<script src="~/albums/scripts/script.js"></script>
 </body>
