@@ -1,38 +1,41 @@
-﻿@model IEnumerable<Domain.Models.Album>
+﻿@model Domain.Models.Section
 
-@{
-    ViewData["Title"] = "Albums";
-}
-<link rel="stylesheet" href="~/albums/styles/style.css" />
+<head>
+    <title>@Model.Name</title>
+    <link rel="stylesheet" href="~/albums/styles/style.css" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Sélectionner tous les éléments avec la classe 'album'
+            const albums = document.querySelectorAll('.album');
 
-<h1>Albums</h1>
+            // Ajouter un événement de clic à chaque album
+            albums.forEach(album => {
+                album.addEventListener('click', function() {
+                    // Récupérer le lien à partir de l'attribut 'data-link'
+                    const link = album.getAttribute('data-link');
+                    if (link) {
+                        // Rediriger vers le lien
+                        window.location.href = link;
+                    }
+                });
+            });
+        });
+    </script>
+</head>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Link</th>
-    </tr>
-    </thead>
-    <tbody>
-    @if (Model != null && Model.Any())
-    {
-        foreach (var album in Model)
+<body>
+<div class="container">
+    <h1>@Model.Name</h1>
+    <div class="grid-container">
+        @if (Model.Albums.Any())
         {
-            <tr>
-                <td>@album.Id</td>
-                <td>@album.Name</td>
-                <td><a href="@album.Link" target="_blank">View Album</a></td>
-            </tr>
+            foreach (var album in Model.Albums)
+            {
+                <div class="album" data-link="@album.Link">
+                    <p>@album.Name</p>
+                </div>
+            }
         }
-    }
-    else
-    {
-        <tr>
-            <td colspan="3">No albums found.</td>
-        </tr>
-    }
-    </tbody>
-    
-</table>
+    </div>
+</div>
+</body>

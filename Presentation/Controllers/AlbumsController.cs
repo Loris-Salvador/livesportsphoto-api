@@ -1,5 +1,7 @@
 ﻿using Application.Repositories;
+using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Presentation.Controllers
 {
@@ -16,7 +18,18 @@ namespace Presentation.Controllers
         {
             var albums = await SectionRepository.GetAlbumsAsync(id, cancellationToken);
 
-            return View(albums);
+            if (albums.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            var section = new Section
+            {
+                Name = id,
+                Albums = albums
+            };
+
+            return View(section);
         }
 
 

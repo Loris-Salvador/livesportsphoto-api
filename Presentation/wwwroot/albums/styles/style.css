@@ -1,3 +1,41 @@
 ﻿body {
-    background-color: grey
+    background-color: #333333;
+}
+
+.container {
+    width: 100%;
+}
+
+h1 {
+    text-align:center;
+    margin-top: 50px;
+    font-size:50px;
+    color: white;
+}
+
+
+.grid-container {
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 100px;
+    justify-items:center;
+}
+
+p {
+    font-size: 42px;
+    color: white;
+    font-weight: bold;
+    text-align:center;
+}
+
+.album {
+    cursor: pointer;
+    width: 50%;
+    height: 150px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3B3B3B;
 }
