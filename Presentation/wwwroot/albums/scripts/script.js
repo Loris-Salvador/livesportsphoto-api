@@ -5,6 +5,7 @@ albums.forEach(album => {
         const link = album.getAttribute('data-link');
         if (link) {
             window.location.href = link;
+            window.open(link, '_blank');
         }
     });
 });
