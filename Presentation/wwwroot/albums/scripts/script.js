@@ -4,7 +4,7 @@ albums.forEach(album => {
     album.addEventListener('click', function() {
         const link = album.getAttribute('data-link');
         if (link) {
-            window.location.href = link;
+            //window.location.href = link;
             window.open(link, '_blank');
         }
     });
