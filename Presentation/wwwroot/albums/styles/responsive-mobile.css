@@ -2,4 +2,8 @@
     .grid-container {
         grid-template-columns: 1fr;
     }
+
+    p {
+        font-size: 28px;
+    }
 }
